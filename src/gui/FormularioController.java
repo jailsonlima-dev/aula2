@@ -81,13 +81,14 @@ public class FormularioController {
 		BtnSair.setOnAction(e-> {Sair();});
 		
 		BtnNovo.setOnAction(e -> {
-			statusForm=0;
+			statusForm=1;
 			emEdicao(true);
+			habilitaCampos(true);
 			limparCampos();
 			});
 		
 		BtnEditar.setOnAction(e-> {
-			statusForm=0;
+			statusForm=2;
 			emEdicao(true);
 			habilitaCampos(true);
 		});
@@ -98,8 +99,6 @@ public class FormularioController {
 		
 		BtnEXcluir.setOnAction(e-> {Excluir();});
 		
-		BtnSair.setOnAction(e-> {Sair();});
-
 		formCadastro.sceneProperty().addListener((obs, oldscene, newScene) -> {
 			if (newScene != null) {
 				newScene.setOnKeyPressed(e -> {
