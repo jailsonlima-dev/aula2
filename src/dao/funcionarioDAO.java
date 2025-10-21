@@ -10,6 +10,26 @@ import model.funcionarioModel;
 import util.conexao;
 
 public class funcionarioDAO {
+	// autenticar usuario e senha
+	public boolean autenticar (String usuario, String senha) {
+		try {
+			String sql = "SELECT * FROM funcionarios WHERE usuario = ? AND senha = ?";
+			
+			Connection conn = conexao.getConnection();
+			PreparedStatement query = conn.prepareStatement(sql);
+			
+			query.setString(1, usuario);
+			query.setString(2, senha);
+			
+			ResultSet resultado = query.executeQuery();
+			return resultado.next();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+			
+	}
 
 	// LISTAR
 
@@ -66,11 +86,11 @@ public class funcionarioDAO {
 		PreparedStatement query = null;
 		try {
 			conn = conexao.getConnection();
-			String sql="insert funcionarios"+
-					"(nome,cpf,rg,cargo,salario,usuario,senha,data_cadastro,data_alteracao)"+
-					" values (?,?,?,?,?,?,?,now(),null)";
-			
-			query=conn.prepareStatement(sql);
+			String sql = "insert funcionarios"
+					+ "(nome,cpf,rg,cargo,salario,usuario,senha,data_cadastro,data_alteracao)"
+					+ " values (?,?,?,?,?,?,?,now(),null)";
+
+			query = conn.prepareStatement(sql);
 			query.setString(1, f.getNome());
 			query.setString(2, f.getCPF());
 			query.setString(3, f.getRG());
@@ -78,7 +98,6 @@ public class funcionarioDAO {
 			query.setString(5, f.getSalario());
 			query.setString(6, f.getUsuario());
 			query.setString(7, f.getSenha());
-			
 
 			int inserir = query.executeUpdate();
 
@@ -97,10 +116,10 @@ public class funcionarioDAO {
 		PreparedStatement query = null;
 		try {
 			conn = conexao.getConnection();
-			String sql="update funcionarios set nome=?, cpf=?, rg=?, cargo=?,"+
-					"salario=?, usuario=?, senha=?, data_alteracao=now() where id_funcionario=?";
-			
-			query=conn.prepareStatement(sql);
+			String sql = "update funcionarios set nome=?, cpf=?, rg=?, cargo=?,"
+					+ "salario=?, usuario=?, senha=?, data_alteracao=now() where id_funcionario=?";
+
+			query = conn.prepareStatement(sql);
 			query.setString(1, f.getNome());
 			query.setString(2, f.getCPF());
 			query.setString(3, f.getRG());
@@ -119,21 +138,22 @@ public class funcionarioDAO {
 			return false;
 		}
 	}
+
 	// DELETE
 	public boolean excluirFuncionario(int id) {
 		Connection conn = null;
 		PreparedStatement query = null;
 		try {
 			conn = conexao.getConnection();
-			String sql="delete from funcionarios where id_funcionario=?";
-			query=conn.prepareStatement(sql);
+			String sql = "delete from funcionarios where id_funcionario=?";
+			query = conn.prepareStatement(sql);
 			query.setInt(1, id);
-			
+
 			int delete = query.executeUpdate();
-			
-			return delete >1;
-			
-		}catch (Exception e) {
+
+			return delete > 1;
+
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}

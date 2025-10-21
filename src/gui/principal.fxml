@@ -20,7 +20,7 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#abrirCadastro" text="Clientes" />
                   <MenuItem mnemonicParsing="false" onAction="#abrirFuncionario" text="Funcionários" />
-                  <MenuItem mnemonicParsing="false" text="Produtos" />
+                  <MenuItem mnemonicParsing="false" onAction="#abrirProduto" text="Produtos" />
                   
             </items>
           </Menu>

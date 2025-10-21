@@ -1,5 +1,6 @@
 package gui;
 
+import dao.funcionarioDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,12 +35,13 @@ public class TelaLoginController {
 
 		Alert mensagem;
 
-		if (usuario.equals("admin") && senha.equals("123")) {
-			mensagem = new Alert(Alert.AlertType.CONFIRMATION);
+		funcionarioDAO dao = new funcionarioDAO();
+		if (dao.autenticar(usuario, senha)){
+			/*mensagem = new Alert(Alert.AlertType.CONFIRMATION);
 			mensagem.setTitle("Confimarção");
 			mensagem.setHeaderText(null);
 			mensagem.setContentText("Bem vindo ao Sistema " + usuario);
-			mensagem.showAndWait();
+			mensagem.showAndWait();*/
 			
 			BtnEntar.getScene().getWindow().hide();
 			try {

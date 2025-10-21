@@ -77,4 +77,8 @@ public class principalContrtoller {
 	public void abrirFuncionario() {
 		carregarTelas("funcionario.fxml", "Sistema | Cadastro de Funcionarios");
 	}
+	
+	public void abrirProduto() {
+		carregarTelas("Produto.fxml", "Sistema | Cadastro de Produtos");
+	}
 }
