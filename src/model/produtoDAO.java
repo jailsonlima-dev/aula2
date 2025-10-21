@@ -10,26 +10,27 @@ import util.conexao;
 
 public class produtoDAO {
 	
-	public List<produtoModel> listarFuncionarios(String desc) {
+	//LISTAR
+	
+	public List<produtoModel> listarProdutos(String desc){
 		Connection conn = null;
-		PreparedStatement query = null;
-		ResultSet resultado = null;
-
-		List<produtoModel> produto = new ArrayList<produtoModel>();
+		PreparedStatement query=null;
+		ResultSet resultado=null;
+		
+		List <produtoModel> produtos = new ArrayList <produtoModel>();
 		try {
-			conn = conexao.getConnection();
-			if (conn == null)
-				return produto;
-			String sql = "select *from produtos";
-
-			if (desc != null && !desc.isEmpty()) {
-				sql = "select *from produtos where nome like ?";
-				query = conn.prepareStatement(sql);
-				query.setString(1, "%" + sql + "%");
+			conn=conexao.getConnection();
+			if(conn==null) return produtos;
+			String sql="select *from produtos";
+			
+			if(desc!=null && !desc.isEmpty()) {
+				sql="select *from produtos where nome like ?";
+				query=conn.prepareStatement(sql);
+				query.setString(1, "%"+desc+"%");
 			} else {
-				query = conn.prepareStatement(sql);
+				query=conn.prepareStatement(sql);
 			}
-
+			
 			resultado = query.executeQuery();
 
 			while (resultado.next()) {
@@ -45,22 +46,22 @@ public class produtoDAO {
 				
 				p.setIdProduto(resultado.getInt("id_produto"));
 				p.setNome(resultado.getString("nome"));
-				p.setDescricao(resultado.getString("decricao"));
+				p.setDescricao(resultado.getString("descricao"));
 				p.setPreco(resultado.getDouble("preco"));
 				p.setEstoque(resultado.getInt("estoque"));
 				p.setDataCadastro(resultado.getDate("data_cadastro"));
 				p.setDataAlteracao(resultado.getDate("data_alteracao"));
-				produto.add(p);
+				produtos.add(p);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return produto;
+		return produtos;
 	}
 
 	// INSERT
-	public boolean inserirProdutos(produtoModel p) {
+	public boolean inserirProduto(produtoModel p) {
 		Connection conn = null;
 		PreparedStatement query = null;
 		try {
@@ -86,7 +87,7 @@ public class produtoDAO {
 
 	// UPDATE
 
-	public boolean atualizaProduto(produtoModel p) {
+	public boolean atualizarProduto(produtoModel p) {
 		Connection conn = null;
 		PreparedStatement query = null;
 		try {

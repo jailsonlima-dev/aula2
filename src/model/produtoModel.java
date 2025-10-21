@@ -1,6 +1,6 @@
 package model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class produtoModel {
 	private int id_produto;
@@ -23,8 +23,7 @@ public class produtoModel {
         this.data_alteracao = data_alteracao;
     }
 
-    public produtoModel() {
-    }
+
 
         public int getIdProduto() {
         return id_produto;
