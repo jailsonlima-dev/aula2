@@ -6,9 +6,9 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="427.0" fitWidth="420.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="361.0" fitWidth="277.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../Downloads/AAHDh0Ag.jpg" />
+            <Image url="@../../../../Downloads/saco%20de%20cimeto%20com%20vergonha.jpeg" />
          </image>
       </ImageView>
    </children>

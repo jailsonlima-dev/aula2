@@ -59,6 +59,8 @@
                   <Label layoutX="481.0" layoutY="95.0" text="Estoque" />
                   <TextField fx:id="txtData" layoutX="406.0" layoutY="174.0" />
                   <Label layoutX="406.0" layoutY="157.0" text="Data de Cadastro" />
+                  <TextField fx:id="txtcodBarra" layoutX="35.0" layoutY="226.0" prefHeight="26.0" prefWidth="278.0" />
+                  <Label layoutX="36.0" layoutY="208.0" text="Código de Barra" />
                </children>
             </AnchorPane>
         </items>

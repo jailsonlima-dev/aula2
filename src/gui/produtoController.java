@@ -21,6 +21,7 @@ public class produtoController extends FormularioController {
 	@FXML protected TextField txtEstoque;
 	@FXML protected TextField txtNome;
 	@FXML protected TextField txtPreco;
+	@FXML protected TextField txtcodBarra;
 	 
 	@FXML protected TableView<produtoModel> tabDados;
 	@FXML protected TableColumn<produtoModel, Integer> colID;
@@ -87,12 +88,13 @@ public class produtoController extends FormularioController {
 	try {	
 		String nome=txtNome.getText();
 		String descricao=txtDescricao.getText();
+		String codbarras=txtcodBarra.getText();
 		Integer estoque=Integer.valueOf(txtEstoque.getText());
 		Double preco=Double.valueOf(txtPreco.getText());
 		Date data=new Date();
 		
 		if(statusForm==1) {
-			produtoModel novoProduto= new produtoModel(0,nome,descricao,preco,estoque,data,data);
+			produtoModel novoProduto= new produtoModel(0,nome,descricao,codbarras,preco,estoque,data,data);
 		boolean ok = dao.inserirProduto(novoProduto);
 		
 		if (ok) {
@@ -106,7 +108,7 @@ public class produtoController extends FormularioController {
 			
 	} else if(statusForm==2) {
 			int id=tabDados.getSelectionModel().getSelectedItem().getIdProduto();
-			produtoModel atualizaProduto = new produtoModel(id,nome,descricao,
+			produtoModel atualizaProduto = new produtoModel(id,nome,descricao,codbarras,
 					preco,estoque,null,null);
 			boolean ok = dao.atualizarProduto(atualizaProduto);
 					if (ok) {
