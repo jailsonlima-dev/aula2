@@ -18,7 +18,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Cadastro">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#abrirCadastro" text="Clientes" />
+              <MenuItem mnemonicParsing="false" onAction="#abrirCliente" text="Clientes" />
                   <MenuItem mnemonicParsing="false" onAction="#abrirFuncionario" text="Funcionários" />
                   <MenuItem mnemonicParsing="false" onAction="#abrirProduto" text="Produtos" />
                   

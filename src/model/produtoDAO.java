@@ -35,7 +35,8 @@ public class produtoDAO {
 			resultado = query.executeQuery();
 
 			while (resultado.next()) {
-				produtoModel p = new produtoModel(resultado.getInt("id_produto"),
+				produtoModel p = new produtoModel(
+						resultado.getInt("id_produto"),
 						resultado.getString("nome"),
 						resultado.getString("descricao"), 
 						resultado.getString("codbarras"),

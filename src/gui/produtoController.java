@@ -46,7 +46,8 @@ public class produtoController extends FormularioController {
 				(obs, selecao , novaSelecao) ->{
 					if (novaSelecao != null) {
 						txtNome.setText(novaSelecao.getNome());
-						txtDescricao.setText(novaSelecao.getDescricao());						
+						txtDescricao.setText(novaSelecao.getDescricao());
+						txtcodBarra.setText(novaSelecao.getCodBarra());
 						txtEstoque.setText(String.valueOf(novaSelecao.getEstoque()));
 						txtPreco.setText(String.valueOf(novaSelecao.getPreco()));
 						txtData.setText(novaSelecao.getDataCadastro().toString());
@@ -76,6 +77,7 @@ public class produtoController extends FormularioController {
 			if(produto != null) {
 				txtNome.setText(produto.getNome());
 				txtDescricao.setText(produto.getDescricao());
+				txtcodBarra.setText(produto.getCodBarra());
 				txtEstoque.setText(String.valueOf(produto.getEstoque()));
 				txtPreco.setText(String.valueOf(produto.getPreco()));
 				txtData.setText(produto.getDataCadastro().toString());

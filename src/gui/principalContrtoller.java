@@ -66,9 +66,9 @@ public class principalContrtoller {
 	}
 	
 	
-	public void abrirCadastro() {
+	/*public void abrirCadastro() {
 		carregarTelas("formulario.fxml", "Cadastro");
-	}
+	}*/
 	
 	public void abrirPaginaInicial() {
 		carregarTelas("planoFundo.fxml", "Sistema | Página Inicial");
@@ -80,5 +80,9 @@ public class principalContrtoller {
 	
 	public void abrirProduto() {
 		carregarTelas("Produto.fxml", "Sistema | Cadastro de Produtos");
+	}
+	
+	public void abrirCliente() {
+		carregarTelas("cliente.fxml", "Sistema | Central de Clientes");
 	}
 }
