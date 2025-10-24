@@ -60,7 +60,7 @@ public class clienteDAO {
 	}
 
 	// INSERT
-	public boolean inserirClientes(clienteModel c) {
+	public boolean inserirCliente(clienteModel c) {
 		Connection conn = null;
 		PreparedStatement query = null;
 		try {
