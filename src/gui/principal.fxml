@@ -8,22 +8,40 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.principalContrtoller">
    <children>
-      <MenuBar>
+      <MenuBar VBox.vgrow="ALWAYS">
         <menus>
           <Menu mnemonicParsing="false" text="Inicio">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#loggout" text="loggout" />
-              <MenuItem mnemonicParsing="false" onAction="#close" text="Fechar" />
+                  <MenuItem mnemonicParsing="false" onAction="#abrirPaginaInicial" text="Home" />
+              <MenuItem mnemonicParsing="false" onAction="#loggout" text="Loggout" />
+                  <MenuItem mnemonicParsing="false" onAction="#close" text="Fechar" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Cadastro">
+          <Menu mnemonicParsing="false" text="Cadastros">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#abrirCliente" text="Clientes" />
                   <MenuItem mnemonicParsing="false" onAction="#abrirFuncionario" text="Funcionários" />
                   <MenuItem mnemonicParsing="false" onAction="#abrirProduto" text="Produtos" />
-                  
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Operação">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#abrirFrenteCaixa" text="Frente de Caixa" />
+                  <MenuItem mnemonicParsing="false" text="Processa Estoque" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Relatórios">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Relatório de Vendas" />
+                  <MenuItem mnemonicParsing="false" text="Relatório de Estoque" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Sistema">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Configuração" />
+                  <MenuItem mnemonicParsing="false" text="Controle de Acesso" />
+               </items>
+            </Menu>
         </menus>
       </MenuBar>
       <AnchorPane fx:id="form" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />

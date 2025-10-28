@@ -85,4 +85,8 @@ public class principalContrtoller {
 	public void abrirCliente() {
 		carregarTelas("cliente.fxml", "Sistema | Central de Clientes");
 	}
+	
+	public void abrirFrenteCaixa() {
+		carregarTelas("fernteCaixa.fxml", "Sistema | Frente de Caixa");
+	}
 }

@@ -34,7 +34,7 @@ public class clienteController extends FormularioController {
 	protected TableView<clienteModel> tabDados;
 	@FXML
 	protected TableColumn<clienteModel, Integer> colID;
-	@FXML
+	@FXML 
 	protected TableColumn<clienteModel, String> colDescricao;
 	private ObservableList<clienteModel> clienteList;
 
