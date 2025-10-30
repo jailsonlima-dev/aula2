@@ -12,7 +12,7 @@ public class produtoDAO {
 
 	// LISTAR
 
-	public List<produtoModel> listarProdutos(String desc) {
+	public List<produtoModel> listarProdutos(String desc , int tipo) {
 		Connection conn = null;
 		PreparedStatement query = null;
 		ResultSet resultado = null;
@@ -25,9 +25,15 @@ public class produtoDAO {
 			String sql = "select *from produtos";
 
 			if (desc != null && !desc.isEmpty()) {
-				sql = "select *from produtos where nome like ?";
-				query = conn.prepareStatement(sql);
-				query.setString(1, "%" + desc + "%");
+				if (tipo==1) {
+					 sql="select * from produtos where nome like ?";
+					 query=conn.prepareStatement(sql);
+					 query.setString(1, "%"+desc+"%");
+					} else if(tipo==2) {
+					 sql="select * from produtos where codbarras = ?";
+					 query=conn.prepareStatement(sql);
+					 query.setString(1, desc);
+					}
 			} else {
 				query = conn.prepareStatement(sql);
 			}

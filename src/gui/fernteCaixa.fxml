@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="formFrenteCaixa" prefHeight="593.0" prefWidth="875.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.frenteCaixaController">
+<AnchorPane fx:id="formFrenteCaixa" prefHeight="593.0" prefWidth="875.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.frenteCaixaController">
    <children>
       <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -51,28 +51,34 @@
                                               <ColumnConstraints maxWidth="276.0" minWidth="10.0" prefWidth="70.0" />
                                             </columnConstraints>
                                             <rowConstraints>
-                                              <RowConstraints maxHeight="64.59998168945313" minHeight="10.0" prefHeight="64.59998168945313" vgrow="SOMETIMES" />
-                                              <RowConstraints maxHeight="44.60001220703125" minHeight="10.0" prefHeight="34.20001831054687" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="64.59998168945313" minHeight="10.0" prefHeight="43.59998779296875" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="64.59998168945313" minHeight="10.0" prefHeight="21.600012207031256" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="44.60001220703125" minHeight="10.0" prefHeight="43.000002288818365" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <TextField fx:id="edtBusca" prefHeight="25.0" prefWidth="416.0" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                                                <TextField fx:id="txtBusca" prefHeight="25.0" prefWidth="416.0" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField fx:id="edtQuantidade" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                                                <TextField fx:id="txtQuantidade" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </TextField>
-                                                <Label fx:id="lblTipoBusca" text="Código de Barras Produto" GridPane.valignment="BOTTOM">
+                                                <Label fx:id="lblTipoBusca" text="Código de Barras Produto" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                                                    <font>
                                                       <Font name="System Bold" size="12.0" />
                                                    </font>
                                                 </Label>
-                                                <Label text="Quantidade" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
+                                                <Label text="Quantidade" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                                                    <font>
                                                       <Font name="System Bold" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="lblPedido" prefHeight="35.0" prefWidth="468.0">
+                                                   <font>
+                                                      <Font size="24.0" />
                                                    </font>
                                                 </Label>
                                              </children>
@@ -96,9 +102,9 @@
                                     </TableView>
                                     <StackPane prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                        <children>
-                                          <ImageView fitHeight="142.0" fitWidth="194.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../../../../Downloads/senai-logo-0.png" />
+                                                <Image url="@../../../../../Downloads/senai2.png" />
                                              </image>
                                           </ImageView>
                                        </children>

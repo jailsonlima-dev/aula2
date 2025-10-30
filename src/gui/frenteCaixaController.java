@@ -1,7 +1,12 @@
 package gui;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
+import dao.pedidoDAO;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -24,11 +29,17 @@ public class frenteCaixaController {
 	@FXML
 	private AnchorPane formFrenteCaixa;
 	@FXML
-	private TextField edtQuantidade;
+	private TextField txtQuantidade;
 	@FXML
-	private TextField edtBusca;
+	private TextField txtBusca;
 	@FXML
 	private Label lblTipoBusca;
+
+	@FXML
+	private Label lblPedido;
+	private int pedido = 0;
+	private boolean pedidoIniciado = false;
+
 	@FXML
 	private TableView<produtoModel> tabItem;
 	@FXML
@@ -50,9 +61,13 @@ public class frenteCaixaController {
 	@FXML
 	private TableColumn<itemModel, Double> colValorUn;
 
-	private ObservableList<itemModel> itemList;
+	private ObservableList<itemModel> itensList;
 
 	private boolean buscaDescricao = false;
+	
+	DecimalFormat formatoMoeda = new DecimalFormat("R$ #,##0.00");
+    //NumberFormat formatMoeda = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+    NumberFormat formatMoeda = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
 
 	@FXML
 	private void initialize() {
@@ -61,7 +76,8 @@ public class frenteCaixaController {
 		 * edtQuantidade.requestFocus(); //System.out.println("* pressionado"); // Aqui
 		 * você pode executar qualquer ação desejada } });
 		 */
-
+     
+    	//PREPARA AS COLUNAS DA TABELA DE BUSCA DE PRODUTO PARA RECEBER OS DADOS
 		tabID.setCellValueFactory(new PropertyValueFactory<>("CodBarra"));
 		tabDescricao.setCellValueFactory(new PropertyValueFactory<>("Nome"));
 
@@ -71,7 +87,9 @@ public class frenteCaixaController {
 		colValorUn.setCellValueFactory(new PropertyValueFactory<>("PrecoUnitario"));
 		colValorTotal.setCellValueFactory(new PropertyValueFactory<>("ValorTotal"));
 
-		edtQuantidade.setText("1");
+		 //lblPedido.setText(String.valueOf(pedido));	
+		lblPedido.setText(String.format("%06d",pedido));
+		txtQuantidade.setText("1");
 
 		formFrenteCaixa.sceneProperty().addListener((obs, oldScene, newScene) -> {// Adiciona listener depois que a cena
 																					// estiver carregada
@@ -82,7 +100,16 @@ public class frenteCaixaController {
 
 					switch (key) {
 					case F1:
-						System.out.println("F1 pressionado ");
+						if (!pedidoIniciado) {
+							pedidoDAO dao = new pedidoDAO();
+							pedido = dao.criarPedido();
+							lblPedido.setText(String.format("%06d",pedido));
+							if (pedido > 0) {
+								pedidoIniciado = true;
+							}
+						} else {
+							metodo.mensagem("Pedido", null, "Já existem um Pedido em aberto!", "1");
+						}
 						break;
 					case F2:
 						System.out.println("F2 pressionado");
@@ -90,15 +117,22 @@ public class frenteCaixaController {
 					case F3:
 						System.out.println("F3 pressionado ");
 						break;
+					case F8:
+						if (pedidoIniciado) {
+							pedidoIniciado = false;
+							pedido = 0;
+						} else {
+							metodo.mensagem("Atenção", null, "Nenhum pedido iniciado", "2");
+						}
+						break;
 					case F10:
 					case ESCAPE:
 						// System.out.println("Fechando formulário...");
 						stage.close();
 						break;
 					case MULTIPLY: // Teclado numérico (*)
-						edtQuantidade.requestFocus();
+						txtQuantidade.requestFocus();
 						// System.out.println("Teclado numérico * pressionado");
-						//
 						break;
 					default:
 
@@ -107,51 +141,61 @@ public class frenteCaixaController {
 				});
 			}
 		});
-
-		edtQuantidade.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+/*
+		txtQuantidade.addEventFilter(KeyEvent.KEY_TYPED, event -> {
 			if ("*".equals(event.getCharacter())) {
 				event.consume(); // Bloqueia o * dentro do edtQuantidade
 			}
 		});
-
-		edtQuantidade.setOnAction(e -> {
-			if (edtQuantidade.getText().trim().isEmpty()) {
-				edtQuantidade.setText("1");
-				edtBusca.requestFocus();
+*/
+		txtQuantidade.setOnAction(e -> {
+			if (txtQuantidade.getText().trim().isEmpty()) {
+				txtQuantidade.setText("1");
+				txtBusca.requestFocus();
 
 			} else {
-				edtQuantidade.setText(String.valueOf(metodo.strToIntDef(edtQuantidade.getText(), 1)));
+				txtQuantidade.setText(String.valueOf(metodo.strToIntDef(txtQuantidade.getText(), 1)));
 				// edtQuantidade.setText(Integer.toString(WindowHelper.strToIntDef(edtQuantidade.getText(),1)));
-				edtBusca.requestFocus();
+				txtBusca.requestFocus();
 			}
 
 		});
 
-		edtBusca.setOnAction(e -> {
+		txtBusca.setOnAction(e -> {
 			// inserir o produto
-
-			if (edtBusca.getText().equals("*")) {
-				edtBusca.setText(null);
-				edtQuantidade.requestFocus();
-				edtQuantidade.setText("");
+			if (txtBusca.getText().equals("*")) {
+				txtBusca.setText(null);
+				txtQuantidade.requestFocus();
+				txtQuantidade.setText("");
 				return;
 			}
 			;
 
+			if (!pedidoIniciado) {
+				metodo.mensagem("Incluir novo pedido", null, "Aperte 'F1' para iniciar um novo pedido", "1");
+			} else {
+				String textoBusca= txtBusca.getText().replace("%", "");
+        		if(!textoBusca.isEmpty()) {
+					// tabItemVisualizacao(true);
+					buscaItem(2);
+					tabItem.getSelectionModel().selectFirst();
+					inserirNovoItem();
+				}
+			}
 		});
 
-		edtBusca.setOnKeyPressed(event -> {
+		txtBusca.setOnKeyPressed(event -> {
 			KeyCode key = event.getCode();
 
-			if ((key == KeyCode.MULTIPLY) || ("*".equals(event.getText()))) {// Se for o * do teclado numérico
+			if ((key == KeyCode.MULTIPLY) || ("*".equals(event.getText()))) {
+				// Se for o * do teclado numérico
 				// System.out.println("Detectado * do teclado numérico no edtBusca");
 				event.consume();
-				edtQuantidade.requestFocus();
-				edtQuantidade.setText("");
+				txtQuantidade.requestFocus();
+				txtQuantidade.setText("");
 			}
 
-			if (edtBusca.getText() == "") {
-				lblTipoBusca.setText("Código de Barras Produto");
+			if (txtBusca.getText() == "") {
 				buscaDescricao = false;
 				tabItemVisualizacao(buscaDescricao);
 			}
@@ -160,14 +204,19 @@ public class frenteCaixaController {
 				if (!buscaDescricao) {
 					buscaDescricao = true;
 					lblTipoBusca.setText("Descrição Produto");
-					edtBusca.setText("");
+					txtBusca.setText("");
 				}
 			}
 
-			edtBusca.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (key == KeyCode.DOWN) {
+				Platform.runLater(() -> tabItem.requestFocus());
+			}
+
+			txtBusca.textProperty().addListener((observable, oldValue, newValue) -> {
 				if (buscaDescricao) {
 					if (newValue.length() >= 3) {
 						tabItemVisualizacao(buscaDescricao);
+						buscaItem(1);
 					}
 				}
 			});
@@ -179,6 +228,16 @@ public class frenteCaixaController {
 			 */
 
 		});
+
+		tabItem.setOnKeyPressed(event -> {
+			KeyCode key = event.getCode();
+			if (key == KeyCode.ENTER) {
+				if (pedidoIniciado && pedido > 0) {
+					inserirNovoItem();
+				}
+			}
+
+		});
 	}
 
 	private void tabItemVisualizacao(boolean status) {
@@ -186,15 +245,33 @@ public class frenteCaixaController {
 		tabItem.setManaged(status);
 		// percentual=status;
 		if (status) {
-		}
+    		lblTipoBusca.setText("Descrição Produto");
+    	} else {
+    		lblTipoBusca.setText("Código de Barras Produto");
+    	}   
 	}
 
-	public void buscaItemDescricao() {
+	public void buscaItem(int tipo) {
 		produtoDAO dao = new produtoDAO();
-		List<produtoModel> produtos = dao.listarProdutos(edtBusca.getText().replace("%", ""));
+		List<produtoModel> produtos = dao.listarProdutos(txtBusca.getText().replace("%", ""), tipo);
 		produtoList = FXCollections.observableArrayList(produtos);
 		tabItem.setItems(produtoList);
-
 	}
 
+	public void inserirNovoItem() {
+		pedidoDAO dao = new pedidoDAO();
+		boolean ok = dao.inserirItemPedido(pedido, tabItem.getSelectionModel().getSelectedItem().getIdProduto(),
+				Integer.valueOf(txtQuantidade.getText()), tabItem.getSelectionModel().getSelectedItem().getPreco(), 0,
+				tabItem.getSelectionModel().getSelectedItem().getPreco() * Integer.valueOf(txtQuantidade.getText()));
+
+		if (ok) {
+			List<itemModel> itens = dao.listarItensPedido(pedido);
+			itensList = FXCollections.observableArrayList(itens);
+			tabItemPedido.setItems(itensList);
+		}
+		txtBusca.setText("");
+		txtBusca.requestFocus();
+		buscaDescricao=false;
+		tabItemVisualizacao(false);
+	}
 }
