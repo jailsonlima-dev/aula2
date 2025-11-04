@@ -10,6 +10,8 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -36,11 +38,16 @@ public class frenteCaixaController {
 	private Label lblTipoBusca;
 
 	@FXML
+	private Button removerItem;
+
+	@FXML
 	private Label lblPedido;
-	
-	@FXML private Label lblQtdItens;
-    @FXML private Label lblValorTotal;
-    
+
+	@FXML
+	private Label lblQtdItens;
+	@FXML
+	private Label lblValorTotal;
+
 	private int pedido = 0;
 	private boolean pedidoIniciado = false;
 
@@ -279,14 +286,42 @@ public class frenteCaixaController {
 		tabItemVisualizacao(false);
 		totalPedido();
 	}
+
+	private void totalPedido() {
+		// pedidoDAO dao = new pedidoDAO();
+		// List<pedidoModel> pedido = dao.resumoPedido(pedido);
+		List<pedidoModel> resumoPedido = pedidoDAO.resumoPedido(pedido);
+		pedidoModel resumo = resumoPedido.get(0);
+		lblValorTotal.setText(String.valueOf(resumo.getValorTotal()));
+		lblQtdItens.setText(String.valueOf(resumo.getQuantidade()));
+
+	}
 	
-	 private void totalPedido() {
- 	  	//pedidoDAO dao = new pedidoDAO();
-		//List<pedidoModel> pedido = dao.resumoPedido(pedido);
- 	  	List<pedidoModel> resumoPedido = pedidoDAO.resumoPedido(pedido);
- 	  	pedidoModel resumo = resumoPedido.get(0);
- 	  	lblValorTotal.setText(String.valueOf(resumo.getValorTotal()));
- 	  	lblQtdItens.setText(String.valueOf(resumo.getQuantidade()));
- 	  
-   } 
+	@FXML
+	private void removerItem() {
+	    itemModel itemSelecionado = tabItemPedido.getSelectionModel().getSelectedItem();
+
+	    if (itemSelecionado == null) {
+	        Alert alert = new Alert(Alert.AlertType.WARNING);
+	        alert.setTitle("Nenhum item selecionado");
+	        alert.setHeaderText(null);
+	        alert.setContentText("Selecione um item para remover!");
+	        alert.showAndWait();
+	        return;
+	    }
+
+	    // Remove da tabela
+	    tabItemPedido.getItems().remove(itemSelecionado);
+	    totalPedido();
+
+	    // (Opcional) Remover do banco de dados:
+	    // itemDAO.removerItem(itemSelecionado.getId_item());
+
+	    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+	    alert.setTitle("Item removido");
+	    alert.setHeaderText(null);
+	    alert.setContentText("O item foi removido do pedido.");
+	    alert.showAndWait();
+	    
+	}
 }
